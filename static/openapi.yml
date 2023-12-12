@@ -1,0 +1,90 @@
+openapi: "3.0.0"
+info:
+  title: Text Simplification API
+  version: "1.0.0"
+  description: An API that can be used to simplify text.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+paths:
+  /models:
+    get:
+      summary: Returns a list of available models.
+      operationId: list_models
+      responses:
+        '200':
+          description: A list of available models.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prediction:
+                    type: string
+  /:
+    get:
+      summary: Sanity Check.
+      operationId: test
+      responses:
+        '200':
+          description: A string stating that the controller is properly working.
+          content:
+            text/plain:
+              schema:
+                type: string
+  /sasc/classify_text:
+    post:
+      summary: Classifies sections of scientific articles.
+      operationId: classify
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: "This is the text of a section of a scientific article."
+      responses:
+        '200':
+          description: The label of the class(es) in which the text is classified.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  prediction:
+                    type: string
+        '400':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+      parameters:
+        - in: header
+          name: Content-Type
+          required: true
+          description: The content type of the input data.
+          schema:
+            oneOf:
+              - type: string
+                enum:
+                  - text/plain
+                  - application/json
+        - in: header
+          name: Accept
+          required: true
+          description: The data type that should be returned.
+          schema:
+            oneOf:
+              - type: string
+                enum:
+                  - application/json
+                  - application/xml
+                  - text/plain
+components: {}
