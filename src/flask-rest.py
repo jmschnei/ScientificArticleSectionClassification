@@ -26,9 +26,9 @@ models = [
     {"id": 1, "name": "bert", "description": ""},
     {"id": 2, "name": "scibert", "description": ""},
 ]
-
+ 
 @app.get("/models")
-def get_countries():
+def get_models():
     return jsonify(models)
 
 @app.get("/")
@@ -57,7 +57,8 @@ def analyze():
         if cType == 'text/plain':
             d = data
         elif cType == 'application/json':
-            d = json.loads(data)
+            json_d = json.loads(data)
+            d = json_d['data']
         else:
             return 'ERROR: the contentType header '+cType+' is not supported!'
 

@@ -1,18 +1,18 @@
 from mydata import *
+from models.transformer_based import *
 import re
-
+ 
 def classify_text(d,model):
     t = MySection(d)
     if model=='bert':
-        pass
+        t = classify_sections_bert(t)
     elif model=='scibert':
-        pass
+        t = classify_sections_scibert(t)
     elif model=='roberta':
-        pass
+        t = classify_sections_roberta(t)
     else:
         pass
     return t
-
 
 
 if __name__ == '__main__':
