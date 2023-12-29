@@ -4,4 +4,4 @@ torch==1.8.0
 sklearn==0.24.2
 tensorboardX==1.9
 json
-
+sentence_transformers
