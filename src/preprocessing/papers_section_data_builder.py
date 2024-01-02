@@ -7,6 +7,8 @@ import logging
 import spacy
 import pickle
 
+from semantics import *
+
 ##########################################################################################################
 
 logger = logging.getLogger()
@@ -29,7 +31,6 @@ def init_logger(log_file=None, log_file_level=logging.NOTSET):
     return logger
 
 def generate_grouped_titles(args):
-
     init_logger(args.log_file)
 
     nlp = spacy.load("en_core_web_sm")
@@ -41,10 +42,10 @@ def generate_grouped_titles(args):
 
     logger.info('Load %s' % save_file_TITLES)   
     with open(save_file_TITLES, 'rb') as handle:
-        titles = pickle.load(handle)
+        titles = json.load(handle)
     logger.info('Load %s' % save_file_NUM)
     with open(save_file_NUM, 'rb') as handle:
-        num_papers = pickle.load(handle)
+        titles = json.load(handle)
 
     titles2 = dict()
     for t in titles:
@@ -166,10 +167,13 @@ def load_classified_titles(args):
 
     global classified_titles
     logger.info('Loading classified titles from %s' % save_file_CLASSIFIED)
-    try:
-        with open(save_file_CLASSIFIED, 'rb') as handle:
-            classified_titles = json.load(handle)
-    except:
+    if args.use_classified_titles:
+        try:
+            with open(save_file_CLASSIFIED, 'rb') as handle:
+                classified_titles = json.load(handle)
+        except:
+            classified_titles = dict()
+    else:
         classified_titles = dict()
     logger.info('DONE')
 
@@ -181,17 +185,12 @@ def save_classified_titles(args):
 
     global classified_titles
     logger.info('Saving classified titles to %s' % save_file_CLASSIFIED)   
-    with open(save_file_CLASSIFIED, 'w+') as save:
-        save.write(json.dumps(classified_titles))
+    if args.use_classified_titles:
+        with open(save_file_CLASSIFIED, 'w+') as save:
+            save.write(json.dumps(classified_titles))
 
     logger.info('DONE')
 
-def getSemanticLabel(t):
-    label = None
-    #logger.info('Semantic Label search for "%s"' % t)
-
-    #logger.info('DONE with label "%s"' % label)
-    return label
 
 def getLabel(t):
     #logger.info('Label search for "%s"' % t)
@@ -207,7 +206,6 @@ def getLabel(t):
                 logger.info('DONE with label-1 "%s"' % lemma)
                 return lemma
             else:
-                #TODO
                 pass
         else:
             contain = False
@@ -216,7 +214,8 @@ def getLabel(t):
                 #print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_,token.shape_, token.is_alpha, token.is_stop)
                 if token.lemma_ in classification:
                     contain=True
-                    label = token.lemma_
+                    #label = token.lemma_
+                    label = label + ',' + token.lemma_
                     break
                 #if not token.is_stop:
                 #    label = label + ',' + token.lemma_
@@ -226,9 +225,9 @@ def getLabel(t):
                 return label
             else:
                 pass
-                #classified_titles[t] = [t]
         # We have to manage the semantic similarity
         label = getSemanticLabel(t)
+        classified_titles[t] = label
 
 
 def getDataFromPMC(args):
@@ -293,17 +292,18 @@ def getDataFromPMC(args):
     with open(save_file_TITLES, 'w+') as save:
         # save.write('\n'.join(dataset))
         save.write(json.dumps(titles))
+    logger.info('DONE')
 
     logger.info('Saving to %s' % save_file_DATA)
     with open(save_file_DATA, 'w+') as save:
         # save.write('\n'.join(dataset))
         save.write(json.dumps(data))
+    logger.info('DONE')
 
     logger.info('Saving to %s' % save_file_NUM)
     with open(save_file_NUM, 'w+') as save:
         # save.write('\n'.join(dataset))
         save.write(json.dumps(num_papers))
-
     logger.info('DONE')
 
 
@@ -372,15 +372,17 @@ def generateLabeledDataFromPMC(args):
     logger.info('Saving to %s' % save_file_TITLES)   
     with open(save_file_TITLES, 'w+') as save:
         save.write(json.dumps(titles))
+    logger.info('DONE')
 
     logger.info('Saving to %s' % save_file_DATA)
     with open(save_file_DATA, 'w+') as save:
         save.write(json.dumps(data))
+    logger.info('DONE')
 
     logger.info('Saving to %s' % save_file_NUM)
     with open(save_file_NUM, 'w+') as save:
         save.write(json.dumps(num_papers))
+    logger.info('DONE')
 
     save_classified_titles(args)
-
     logger.info('DONE')
