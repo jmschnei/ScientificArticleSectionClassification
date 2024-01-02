@@ -29,6 +29,7 @@ if __name__ == '__main__':
     parser.add_argument("-data_filename", default='data.json')
     parser.add_argument("-num_papers_filename", default='num_papers.json')
     parser.add_argument("-classified_titles_filename", default='classified_titles.json')
+    parser.add_argument("-use_classified_titles", default=True)
 
     parser.add_argument('-lower_percentage', default='5')
 
