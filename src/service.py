@@ -1,18 +1,19 @@
 from mydata import *
-from models.transformer_based import *
+from models.bert import *
+from models.ollama import *
+from models.rules import *
 import re
  
-def classify_text(d,model):
-    t = MySection(d)
-    if model=='bert':
-        t = classify_sections_bert(t)
-    elif model=='scibert':
-        t = classify_sections_scibert(t)
-    elif model=='roberta':
-        t = classify_sections_roberta(t)
+def classify_text(document,model):
+    if model=='rules':
+        document = classify_sections_rules(document)
+    elif model=='bert':
+        document = classify_sections_bert(document)
+    elif model=='ollama':
+        document = classify_sections_ollama(document)
     else:
         pass
-    return t
+    return document
 
 
 if __name__ == '__main__':
