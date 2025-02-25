@@ -18,7 +18,10 @@ As can be seen, the main functionality is divided into three modules:
 
 ## Offline Processing
 
-- [-] [Off-1.]() Label Generation using titles. The automatic generation of labesl throught he usage of existing datasets of scientific papers, where titles and texts of sections are already provided. The titles are extracted, ranked and filtered basedd on frequency. The mosot frequent ones are used as labels. 
+- [ ] [Off-1.]() Label Generation using titles. The automatic generation of labesl throught he usage of existing datasets of scientific papers, where titles and texts of sections are already provided. The titles are extracted, ranked and filtered basedd on frequency. The mosot frequent ones are used as labels. 
+  - Literature analysis about the topic to see where we are
+  - 
+  - 
 - [ ] [Off-2.]() Manual Label Generation. Define manually a set of labels that correspoond to sections. 
 
 ## Dataset Annotation
@@ -53,9 +56,35 @@ As can be seen, the main functionality is divided into three modules:
 - [ ] [Pa-3.]() 
 - [ ] [Pa-4.]() 
 
+
+## Multilinguality
+
+- [ ] [Mu-1.]() 
+
 ## Roadmap
 
 The plan for the development of the section classification tool is depicted in this section: 
 
 TABLE including tasks, persons, etc.
 
+| :-----: | :---: | :----: | :---: |
+| Task  | Resposible Person | Start Date | Estimated Duration |
+| :-----: | :---: | :----: | :---: |
+| Mu-1. | Kate    | Mar 24 | 3W    |
+| :-----: | :---: | :----: | :---: |
+
+
+> [!NOTE]
+> Useful information that users should know, even when skimming content.
+
+> [!TIP]
+> Helpful advice for doing things better or more easily.
+
+> [!IMPORTANT]
+> Key information users need to know to achieve their goal.
+
+> [!WARNING]
+> Urgent info that needs immediate user attention to avoid problems.
+
+> [!CAUTION]
+> Advises about risks or negative outcomes of certain actions.
