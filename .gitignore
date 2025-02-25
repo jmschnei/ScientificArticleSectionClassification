@@ -1,1 +1,6 @@
 src/preprocessing/__pycache__/papers_section_data_builder.cpython-38.pyc
+src/models/__pycache__/bert.cpython-39.pyc
+.gitignore
+src/models/__pycache__/ollama.cpython-39.pyc
+src/models/__pycache__/rules.cpython-39.pyc
+.gitignore
